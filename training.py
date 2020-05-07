@@ -3,7 +3,12 @@ import argparse
 import torch
 import os
 
-from transformers import GPT2Tokenizer, GPT2LMHeadModel, AdamW, WarmupLinearSchedule
+# from transformers import GPT2Tokenizer, GPT2LMHeadModel, AdamW, WarmupLinearSchedule
+from transformers import GPT2Tokenizer, GPT2LMHeadModel, AdamW
+
+from transformers import get_linear_schedule_with_warmup
+
+
 from torch.utils.data import (DataLoader, RandomSampler, TensorDataset)
 
 from tensorboardX import SummaryWriter
@@ -23,7 +28,11 @@ def init_args():
     parser.add_argument("--store_in_folder", type=str, default="tuned_models", help="Master folder to store the model.")
 
     # Training hyperparams
-    parser.add_argument("--train_model", action='store_true', help="Fine-tune gpt2 model.")
+    
+    # parser.add_argument("--train_model", action='store_true', help="Fine-tune gpt2 model.")
+    
+    parser.add_argument("--train_model", action='store_false', help="Fine-tune gpt2 model.")
+    
     parser.add_argument("--train_data_path", type=str, default="", help="Train dataset path.")
     parser.add_argument('--num_train_epochs', type=int, default=5, help="")
     parser.add_argument('--save_every_n_epoch', type=int, default=5, help="")
@@ -95,8 +104,13 @@ def main():
                          (args.train_batch_size * args.gradient_accumulation_steps)) + 1000
 
     # TODO: Could use NVIDIA Apex for lower precision calculations.
+
     optimizer = AdamW(optimizer_grouped_parameters, lr=args.learning_rate, eps=args.adam_epsilon)
-    scheduler = WarmupLinearSchedule(optimizer, warmup_steps=args.warmup_steps, t_total=optimization_steps)
+    
+    # scheduler = WarmupLinearSchedule(optimizer, warmup_steps=args.warmup_steps, t_total=optimization_steps)
+    
+    scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=args.warmup_steps, num_training_steps=optimization_steps)
+    
 
     # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     # @                            FINE-TUNE GPT2
