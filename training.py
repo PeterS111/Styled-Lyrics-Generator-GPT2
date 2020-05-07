@@ -4,10 +4,10 @@ import torch
 import os
 
 # from transformers import GPT2Tokenizer, GPT2LMHeadModel, AdamW, WarmupLinearSchedule
+## changed:
 from transformers import GPT2Tokenizer, GPT2LMHeadModel, AdamW
-
+## changed:
 from transformers import get_linear_schedule_with_warmup
-
 
 from torch.utils.data import (DataLoader, RandomSampler, TensorDataset)
 
@@ -108,7 +108,7 @@ def main():
     optimizer = AdamW(optimizer_grouped_parameters, lr=args.learning_rate, eps=args.adam_epsilon)
     
     # scheduler = WarmupLinearSchedule(optimizer, warmup_steps=args.warmup_steps, t_total=optimization_steps)
-    
+    ## changed:
     scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=args.warmup_steps, num_training_steps=optimization_steps)
     
 
