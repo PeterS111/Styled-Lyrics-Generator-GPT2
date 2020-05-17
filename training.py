@@ -14,7 +14,7 @@ from tensorboardX import SummaryWriter
 from tqdm import tqdm, trange
 
 import utils.utilities as U
-# import utils.bleu as bleu
+import utils.bleu as bleu
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s -   %(message)s', datefmt='%m/%d/%Y %H:%M:%S', level=logging.INFO)
 logger = logging.getLogger(__name__)
