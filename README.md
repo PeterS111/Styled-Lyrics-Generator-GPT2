@@ -6,6 +6,5 @@ This work utilises a pre-trained GPT2-small model from Transformer library. The 
 
 Open an interactive demo of the model in Google Colab (requires a google account): https://colab.research.google.com/drive/1Gl5zGR8vQM6q7fV0XAPvWg5sX1ZNgDOs 
 
-Open training and generation notebook (requires a google account): 
-https://colab.research.google.com/drive/1UpE6SUCks_evZxCbcoZh34kogRBVjoDQ#scrollTo=VQXCkSQFjJln
+
 
